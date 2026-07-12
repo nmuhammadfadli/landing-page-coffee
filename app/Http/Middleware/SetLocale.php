@@ -10,10 +10,11 @@ class SetLocale
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $locale = $request->cookie('nayaka_language', 'id');
+        $locale = session('nayaka_language', $request->cookie('nayaka_language', 'id'));
 
         if (in_array($locale, ['id', 'en'])) {
             app()->setLocale($locale);
+            session(['nayaka_language' => $locale]);
         }
 
         return $next($request);

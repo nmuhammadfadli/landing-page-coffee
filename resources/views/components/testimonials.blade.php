@@ -2,71 +2,89 @@
 
 <section
     x-data="{
-        active: 0,
+        current: 0,
+        total: {{ $testimonials->count() }},
+        paddingOffset: 0,
         init() {
-            setInterval(() => {
-                this.active = (this.active + 1) % {{ $testimonials->count() }};
-            }, 5000);
+            this.$nextTick(() => {
+                const container = this.$refs.carousel;
+                this.paddingOffset = container.children[0]?.offsetLeft ?? 0;
+            });
+        },
+        scrollTo(idx) {
+            this.current = idx;
+            const container = this.$refs.carousel;
+            const card = container.children[idx];
+            if (card) {
+                container.scrollLeft = card.offsetLeft - this.paddingOffset;
+            }
         }
     }"
-    class="py-20 px-4 sm:px-6 lg:px-8 bg-white"
+    class="py-20 sm:py-28 bg-white overflow-hidden"
 >
-    <div class="max-w-3xl mx-auto text-center">
-        <h2 class="font-display text-3xl sm:text-4xl font-bold text-gray-900 mb-16">
-            {{ t('Apa Kata Mitra Kami', 'What Our Partners Say') }}
-        </h2>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-14 space-y-3">
+            <span class="text-xs font-bold text-accent-gold uppercase tracking-widest block">
+                {{ t('Testimoni Mitra', 'PARTNER TESTIMONIALS') }}
+            </span>
+            <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-primary-green">
+                {{ t('Apa Kata Mitra Kami', 'What Our Partners Say') }}
+            </h2>
+            <div class="mt-4 mx-auto w-16 h-1 bg-accent-gold rounded-full"></div>
+        </div>
 
-        @foreach ($testimonials as $i => $testimonial)
-            <div
-                x-cloak
-                x-show="active === {{ $i }}"
-                x-transition:enter="transition ease-in-out duration-500"
-                x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100"
-                x-transition:leave="transition ease-in-out duration-500"
-                x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0"
-                class="space-y-6"
-            >
-                <div class="flex flex-col items-center gap-4">
-                    <img
-                        src="{{ $testimonial->avatar }}"
-                        alt="{{ $testimonial->name }}"
-                        class="rounded-full object-cover"
-                        style="width: 60px; height: 60px;"
-                    />
-                    <div>
-                        <h3 class="font-display text-lg font-semibold text-gray-900">
-                            {{ $testimonial->name }}
-                        </h3>
-                        <p class="text-brand-gray text-sm">
-                            {{ t($testimonial->role_id, $testimonial->role_en) }}
+        <!-- Horizontal Carousel -->
+        <div
+            x-ref="carousel"
+            class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 -mx-4 px-4"
+            style="scrollbar-width: none; -ms-overflow-style: none;"
+        >
+            @foreach ($testimonials as $testimonial)
+                <div
+                    class="snap-center shrink-0 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
+                >
+                    <div class="bg-white border border-gray-100 rounded-2xl p-8 shadow-luxury h-full flex flex-col">
+                        <!-- Stars -->
+                        <div class="flex gap-1 mb-5">
+                            @for ($s = 0; $s < 5; $s++)
+                                <span class="text-lg {{ $s < $testimonial->rating ? 'text-accent-gold' : 'text-gray-200' }}">★</span>
+                            @endfor
+                        </div>
+
+                        <!-- Quote -->
+                        <p class="text-gray-600 text-sm leading-relaxed flex-1">
+                            &ldquo;{{ t($testimonial->quote_id, $testimonial->quote_en) }}&rdquo;
                         </p>
+
+                        <!-- Author -->
+                        <div class="flex items-center gap-3 mt-6 pt-6 border-t border-gray-100">
+                            <img
+                                src="{{ $testimonial->avatar }}"
+                                alt="{{ $testimonial->name }}"
+                                class="rounded-full object-cover border-2 border-accent-gold/20"
+                                style="width: 48px; height: 48px;"
+                            />
+                            <div>
+                                <h4 class="font-display font-bold text-primary-green text-sm">
+                                    {{ $testimonial->name }}
+                                </h4>
+                                <p class="text-xs text-brand-gray">
+                                    {{ t($testimonial->role_id, $testimonial->role_en) }}
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            @endforeach
+        </div>
 
-                <div class="flex justify-center gap-1">
-                    @for ($s = 0; $s < $testimonial->rating; $s++)
-                        <span class="text-xl text-accent-gold">★</span>
-                    @endfor
-                    @for ($s = 0; $s < 5 - $testimonial->rating; $s++)
-                        <span class="text-xl text-gray-300">★</span>
-                    @endfor
-                </div>
-
-                <p class="text-gray-600 text-lg italic leading-relaxed max-w-2xl mx-auto">
-                    &ldquo;{{ t($testimonial->quote_id, $testimonial->quote_en) }}&rdquo;
-                </p>
-            </div>
-        @endforeach
-
-        <div class="flex justify-center gap-3 mt-12">
+        <!-- Dots -->
+        <div class="flex justify-center gap-2 mt-8">
             @foreach ($testimonials as $i => $testimonial)
                 <button
-                    @click="active = {{ $i }}"
-                    class="w-3 h-3 rounded-full transition-all duration-300"
-                    :class="active === {{ $i }} ? 'bg-accent-gold scale-125' : 'bg-gray-300 hover:bg-gray-400'"
-                    aria-label="{{ t('Pindah ke testimonial', 'Go to testimonial') }} {{ $i + 1 }}"
+                    @click="scrollTo({{ $i }})"
+                    class="w-2.5 h-2.5 rounded-full transition-all duration-300"
+                    :class="current === {{ $i }} ? 'bg-accent-gold scale-125 w-6' : 'bg-gray-300 hover:bg-gray-400'"
                 ></button>
             @endforeach
         </div>

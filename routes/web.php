@@ -17,8 +17,8 @@ Route::get('/articles/{slug}', [ArticleController::class, 'show'])->name('articl
 Route::post('/language', function () {
     $locale = request('locale', 'id');
     if (in_array($locale, ['id', 'en'])) {
+        session(['nayaka_language' => $locale]);
         app()->setLocale($locale);
-        return redirect()->back()->cookie('nayaka_language', $locale, 60 * 24 * 365);
     }
     return redirect()->back();
 })->name('language.switch');
