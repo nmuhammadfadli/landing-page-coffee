@@ -23,6 +23,8 @@
     --shadow-luxury-hover: 0 24px 50px -15px rgba(47, 93, 80, 0.12), 0 1px 5px rgba(47, 93, 80, 0.03);
 }
 
+[x-cloak] { display: none !important; }
+
 html {
     scroll-behavior: smooth;
     background-color: var(--color-brand-bg);
