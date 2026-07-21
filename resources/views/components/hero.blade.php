@@ -80,7 +80,7 @@
                     </svg> --}}
                 </a>
                 <a
-                    href="https://wa.me/6281230860124"
+                    href="https://wa.me/{{ setting('whatsapp_phone', '6281230860124') }}"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="inline-flex items-center justify-center gap-2 font-sans font-semibold rounded-lg transition-all duration-300"

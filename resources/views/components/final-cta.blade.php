@@ -16,7 +16,7 @@
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14">
             <a
-                href="https://wa.me/6281230860124"
+                href="https://wa.me/{{ setting('whatsapp_phone', '6281230860124') }}"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="inline-flex items-center gap-2 bg-accent-gold hover:bg-accent-gold/90 text-primary-green font-bold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg shadow-accent-gold/10 text-sm tracking-wider"

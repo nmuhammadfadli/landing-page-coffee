@@ -5,7 +5,9 @@ namespace App\Filament\Resources\Articles;
 use App\Models\Article;
 use Filament\Forms;
 use Filament\Schemas\Schema;
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Section;
+use Filament\Actions;
+use Filament\Tables\Filters;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -76,15 +78,15 @@ class ArticleResource extends Resource
                 Tables\Columns\IconColumn::make('is_published')->boolean()->sortable(),
             ])
             ->filters([
-                Tables\Filters\Filter::make('is_published')->label('Published')->query(fn($q) => $q->where('is_published', true)),
+                Filters\Filter::make('is_published')->label('Published')->query(fn($q) => $q->where('is_published', true)),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Actions\EditAction::make(),
+                Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

@@ -75,7 +75,7 @@
                         Rp{{ number_format($product->price, 0, ',', '.') }}
                     </div>
 
-                    <a href="https://wa.me/6281230860124?text={{ urlencode(t(
+                    <a href="https://wa.me/{{ setting('whatsapp_phone', '6281230860124') }}?text={{ urlencode(t(
                         'Halo, saya tertarik dengan ' . $product->name_id,
                         'Hello, I am interested in ' . $product->name_en
                     )) }}" target="_blank"

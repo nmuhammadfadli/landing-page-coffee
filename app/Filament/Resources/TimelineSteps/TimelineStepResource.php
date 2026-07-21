@@ -6,6 +6,7 @@ use App\Models\TimelineStep;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Actions;
 use Filament\Tables;
 use Filament\Tables\Table;
 use BackedEnum;
@@ -22,7 +23,7 @@ class TimelineStepResource extends Resource
 
     public static function getNavigationIcon(): string | BackedEnum | null
     {
-        return 'heroicon-o-timeline';
+        return 'heroicon-o-clock';
     }
 
     public static function getNavigationSort(): ?int
@@ -54,12 +55,12 @@ class TimelineStepResource extends Resource
                 Tables\Columns\TextColumn::make('icon'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Actions\EditAction::make(),
+                Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('step_number');

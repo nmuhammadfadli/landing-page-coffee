@@ -6,6 +6,8 @@ use App\Models\NewsletterSubscriber;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Actions;
+use Filament\Tables\Filters;
 use Filament\Tables;
 use Filament\Tables\Table;
 use BackedEnum;
@@ -48,15 +50,15 @@ class NewsletterSubscriberResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable(),
             ])
             ->filters([
-                Tables\Filters\Filter::make('subscribed')->label('Active')->query(fn($q) => $q->where('subscribed', true)),
+                Filters\Filter::make('subscribed')->label('Active')->query(fn($q) => $q->where('subscribed', true)),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Actions\EditAction::make(),
+                Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('created_at', 'desc');

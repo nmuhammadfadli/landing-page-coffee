@@ -5,8 +5,10 @@ namespace App\Filament\Resources\Products;
 use App\Models\Product;
 use Filament\Forms;
 use Filament\Schemas\Schema;
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Repeater;
+use Filament\Actions;
+use Filament\Tables\Filters;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -109,18 +111,18 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('sca_score')->sortable(),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('roast_level')
+                Filters\SelectFilter::make('roast_level')
                     ->options(['Light' => 'Light', 'Medium' => 'Medium', 'Dark' => 'Dark']),
-                Tables\Filters\SelectFilter::make('stock_status')
+                Filters\SelectFilter::make('stock_status')
                     ->options(['Available' => 'Available', 'Limited' => 'Limited', 'Sold Out' => 'Sold Out']),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Actions\EditAction::make(),
+                Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('sort_order');
