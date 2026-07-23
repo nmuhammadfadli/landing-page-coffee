@@ -53,8 +53,14 @@
                 class="font-display font-bold text-white mb-6 max-w-6xl mx-auto text-center"
                 style="font-size: clamp(2.3rem, 4.5vw, 4.2rem); line-height: 1.08;"
             >
-                <span class="block">{{ t('Kopi Nusantara Spesialti Murni,', 'Indonesian Specialty Coffee,') }}</span>
-                <span class="block">{{ t('Siap Ekspor ke Seluruh Dunia.', 'Ready to Export to the World.') }}</span>
+                <span class="block">{{ t(
+                    setting('hero_line1_id', 'Kopi Nusantara Spesialti Murni,'),
+                    setting('hero_line1_en', 'Indonesian Specialty Coffee,')
+                ) }}</span>
+                <span class="block">{{ t(
+                    setting('hero_line2_id', 'Siap Ekspor ke Seluruh Dunia.'),
+                    setting('hero_line2_en', 'Ready to Export to the World.')
+                ) }}</span>
             </h2>
 
             {{-- Subline --}}

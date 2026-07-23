@@ -1,17 +1,13 @@
 <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-20">
-            <!-- Logo -->
             <a href="/" class="flex items-center gap-3 group">
-                <div class="w-9 h-9 rounded-xl bg-accent-gold flex items-center justify-center font-display font-extrabold text-primary-green text-sm shadow-sm group-hover:shadow-md transition-shadow">
-                    N
-                </div>
                 <div>
                     <span class="font-display font-extrabold text-lg text-primary-green tracking-tight block leading-none">
-                        Nayaka
+                        {{ setting('brand_name', 'Nayaka') }}
                     </span>
                     <span class="text-[10px] font-bold text-brand-gray uppercase tracking-[0.2em] block leading-none mt-0.5">
-                        Export Atelier
+                        {{ setting('brand_subtitle', 'Export Atelier') }}
                     </span>
                 </div>
             </a>
